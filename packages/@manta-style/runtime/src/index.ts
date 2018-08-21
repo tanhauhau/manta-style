@@ -1,32 +1,26 @@
-import NumberKeyword from './types/NumberKeyword';
-import BooleanKeyword from './types/BooleanKeyword';
-import UndefinedKeyword from './types/UndefinedKeyword';
-import NullKeyword from './types/NullKeyword';
-import TypeLiteral from './types/TypeLiteral';
-import ArrayType from './types/ArrayType';
-import Literal from './types/Literal';
-import UnionType from './types/UnionType';
-import AnyKeyword from './types/AnyKeyword';
-import NeverKeyword from './types/NeverKeyword';
-import StringKeyword from './types/StringKeyword';
-import TypeAliasDeclaration from './nodes/TypeAliasDeclaration';
+import {
+  TypeAliasDeclaration,
+  Type,
+  Annotation,
+  TypeLiteral,
+  MappedType,
+  IndexedAccessType,
+  UnionType,
+  ParenthesizedType,
+  IntersectionType,
+  Literal,
+  ArrayType,
+  ArrayLiteral,
+  TupleType,
+  RestType,
+  OptionalType,
+  ConditionalType,
+  KeyOfKeyword,
+  ConstantTypes,
+  Literals,
+} from '@manta-style/types';
 import LazyTypeAliasDeclaration from './nodes/LazyTypeAliasDeclaration';
-import ConditionalType from './types/ConditionalType';
-import KeyOfKeyword from './types/KeyOfKeyword';
-import TupleType from './types/TupleType';
-import RestType from './types/RestType';
-import OptionalType from './types/OptionalType';
-import IndexedAccessType from './types/IndexedAccessType';
-import MappedType from './types/MappedType';
-import { Type, Literals, Annotation, Property } from './utils/baseType';
-import IntersectionType from './types/IntersectionType';
-import ParenthesizedType from './types/ParenthesizedType';
-import ObjectKeyword from './types/ObjectKeyword';
-import ArrayLiteral from './types/ArrayLiteral';
 
-export type TypeAliasDeclarationFactory = () => TypeAliasDeclaration;
-export type TypeLiteral = TypeLiteral;
-export type Property = Property;
 class MantaStyle {
   public static context: { [key: string]: unknown } = {};
   public static TypeAliasDeclaration(
@@ -86,20 +80,17 @@ class MantaStyle {
   ) {
     return new ConditionalType(checkType, extendsType, trueType, falseType);
   }
-  public static NumberKeyword = new NumberKeyword();
-  public static BooleanKeyword = new BooleanKeyword();
-  public static StringKeyword = new StringKeyword();
-  public static NeverKeyword = new NeverKeyword();
-  public static NullKeyword = new NullKeyword();
-  public static UndefinedKeyword = new UndefinedKeyword();
-  public static AnyKeyword = new AnyKeyword();
-  public static ObjectKeyword = new ObjectKeyword();
+  public static NumberKeyword = ConstantTypes.Number;
+  public static BooleanKeyword = ConstantTypes.Boolean;
+  public static StringKeyword = ConstantTypes.String;
+  public static NeverKeyword = ConstantTypes.Never;
+  public static NullKeyword = ConstantTypes.Null;
+  public static UndefinedKeyword = ConstantTypes.Undefined;
+  public static AnyKeyword = ConstantTypes.Any;
+  public static ObjectKeyword = ConstantTypes.Object;
   public static KeyOfKeyword(type: Type) {
     return new KeyOfKeyword(type);
   }
 }
 
 export default MantaStyle;
-export { Type } from './utils/baseType';
-export const LiteralType = Literal;
-export { resolveReferencedType } from './utils/referenceTypes';
