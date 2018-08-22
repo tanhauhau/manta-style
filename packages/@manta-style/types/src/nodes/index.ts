@@ -13,6 +13,9 @@ export { default as RestType } from './RestType';
 export { default as TupleType } from './TupleType';
 export { default as Type } from './Type';
 export { default as TypeAliasDeclaration } from './TypeAliasDeclaration';
+export {
+  default as LazyTypeAliasDeclaration,
+} from './LazyTypeAliasDeclaration';
 export { default as TypeLiteral } from './TypeLiteral';
 export { default as TypeParameter } from './TypeParameter';
 export { default as UnionType } from './UnionType';

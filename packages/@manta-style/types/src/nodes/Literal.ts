@@ -1,6 +1,6 @@
-import { Literals } from '../utils/baseType';
 import Type from './Type';
 
+export type Literals = string | boolean | number;
 export default class Literal<T extends Literals> extends Type {
   private readonly literal: T;
   constructor(literal: T) {

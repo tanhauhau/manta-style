@@ -22,7 +22,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@manta-style/runtime": "^0.1.1",
+    "@manta-style/types": "^0.1.1",
     "awesome-typescript-loader": "^5.2.0",
     "source-map-loader": "^0.2.4",
     "typescript": "3.0.1",

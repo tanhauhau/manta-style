@@ -1,11 +1,8 @@
 import QueryType from './types/QueryType';
-import MantaStyle from '@manta-style/runtime';
+import { LazyTypeAliasDeclaration } from '@manta-style/types';
 
-export const Query = MantaStyle.TypeAliasDeclaration(
-  'Query',
-  (typeFactory) => {
-    const T = typeFactory.TypeParameter('T');
-    return new QueryType(T);
-  },
-  [],
-);
+export const Query = new LazyTypeAliasDeclaration('Query', []);
+Query.setInitialize((typeFactory) => {
+  const T = typeFactory.TypeParameter('T');
+  return new QueryType(T);
+});

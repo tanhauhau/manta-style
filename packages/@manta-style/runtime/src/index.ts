@@ -8,6 +8,7 @@ import {
   UnionType,
   ParenthesizedType,
   IntersectionType,
+  LazyTypeAliasDeclaration,
   Literal,
   ArrayType,
   ArrayLiteral,
@@ -19,7 +20,6 @@ import {
   ConstantTypes,
   Literals,
 } from '@manta-style/types';
-import LazyTypeAliasDeclaration from './nodes/LazyTypeAliasDeclaration';
 
 class MantaStyle {
   public static context: { [key: string]: unknown } = {};

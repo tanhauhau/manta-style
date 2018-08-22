@@ -26,5 +26,3 @@ export type ComputedProperty = Property & {
 export type AnyObject = {
   [key: string]: any;
 };
-
-export type Literals = string | boolean | number;

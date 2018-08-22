@@ -15,7 +15,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   externals: {
-    '@manta-style/runtime': '@manta-style/runtime',
+    '@manta-style/types': '@manta-style/types',
   },
   module: {
     rules: [

@@ -1,4 +1,6 @@
-import { Type, TypeAliasDeclaration, Annotation } from '@manta-style/types';
+import TypeAliasDeclaration from './TypeAliasDeclaration';
+import Type, { Annotation } from './Type';
+
 export default class LazyTypeAliasDeclaration extends TypeAliasDeclaration {
   private initializer: (currentType: TypeAliasDeclaration) => Type = () =>
     this.type;
