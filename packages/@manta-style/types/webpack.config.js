@@ -4,8 +4,8 @@ module.exports = {
   devtool: 'source-map',
   output: {
     path: __dirname + '/lib',
-    filename: 'manta-style-helpers.js',
-    library: 'MantaStyleHelpers',
+    filename: 'manta-style-types.js',
+    library: 'MantaStyleTypes',
     libraryTarget: 'umd',
     // See https://github.com/webpack/webpack/issues/6522
     globalObject: "typeof self !== 'undefined' ? self : this",
@@ -15,7 +15,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   externals: {
-    '@manta-style/types': '@manta-style/types',
+    '@manta-style/runtime': '@manta-style/runtime',
   },
   module: {
     rules: [

@@ -1,9 +1,9 @@
 {
-  "name": "@manta-style/helpers",
+  "name": "@manta-style/types",
   "version": "0.1.1",
-  "description": "Manta Style Helpers",
-  "main": "./lib/manta-style-helpers.js",
-  "typings": "./index.d.ts",
+  "description": "Manta Style Base Types",
+  "main": "./lib/manta-style-types.js",
+  "typings": "./lib/typings/index.d.ts",
   "author": {
     "name": "Zhongliang Wang",
     "email": "zwang@rebelworks.io",
@@ -22,7 +22,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "@manta-style/types": "^0.1.1",
     "awesome-typescript-loader": "^5.2.0",
     "source-map-loader": "^0.2.4",
     "typescript": "3.0.1",
