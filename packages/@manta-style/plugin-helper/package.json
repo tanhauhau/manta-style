@@ -1,0 +1,26 @@
+{
+  "name": "@manta-style/plugin-helper",
+  "version": "0.1.0",
+  "description": "Manta Style Plugin Helper",
+  "main": "./lib/index.js",
+  "author": {
+    "name": "Tan Li Hau",
+    "email": "lhtan93@gmail.com",
+    "url": "https://github.com/tanhauhau"
+  },
+  "scripts": {
+    "test": "echo 'No test yet'",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Cryrivers/manta-style"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.0"
+  }
+}
