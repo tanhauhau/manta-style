@@ -10,6 +10,10 @@ const MOCK_PLUGIN_REGEX = new RegExp(
   PLUGIN_PREFIX.map((prefix) => `(^${prefix}-mock-)`).join('|'),
 );
 
+const BUILDER_PLUGIN_REGEX = new RegExp(
+  PLUGIN_PREFIX.map((prefix) => `(^${prefix}-builder-)`).join('|'),
+);
+
 type AnyObject = { [key: string]: any };
 type MockResult<T> = T | null | Promise<T | null>;
 
@@ -25,7 +29,13 @@ export interface MockPlugin {
 export interface BuilderPlugin {
   name: string;
   supportedExtensions: string[];
-  build(configFilePath: string): Promise<string[]>;
+  buildConfigFile(
+    configFilePath: string,
+    destDir: string,
+    verbose?: boolean,
+    importHelpers?: boolean,
+  ): Promise<string>;
+  buildConfigSource(sourceCode: string): Promise<string>;
 }
 
 export type Plugin = MockPlugin | BuilderPlugin;
@@ -46,6 +56,9 @@ export class PluginSystem {
       | Array<{ name: string; mock: SupportedMockFunction }>
       | undefined;
   } = {};
+  private builderPlugins: {
+    [key: string]: BuilderPlugin | undefined;
+  } = {};
   constructor(plugins: PluginEntry[]) {
     for (const plugin of plugins) {
       if (isMockPlugin(plugin)) {
@@ -58,6 +71,21 @@ export class PluginSystem {
               name,
               mock: mockFunction,
             });
+          }
+        }
+      } else if (isBuilderPlugin(plugin)) {
+        const { module } = plugin;
+        const { supportedExtensions } = module;
+        for (const extension of supportedExtensions) {
+          const currentHandler = this.builderPlugins[extension];
+          if (!currentHandler) {
+            this.builderPlugins[extension] = module;
+          } else {
+            throw new Error(
+              `Builder Plugin Error, both "${plugin.name}" and "${
+                currentHandler.name
+              }" handle file type "${extension}"`,
+            );
           }
         }
       }
@@ -83,8 +111,57 @@ export class PluginSystem {
     }
     return null;
   }
+  public async buildConfigFile(
+    configFilePath: string,
+    destDir: string,
+    verbose?: boolean,
+    importHelpers?: boolean,
+  ): Promise<string> {
+    const extension = extractNormalizedExtension(configFilePath);
+    const handler = this.builderPlugins[extension];
+    if (handler) {
+      return handler.buildConfigFile(
+        configFilePath,
+        destDir,
+        verbose,
+        importHelpers,
+      );
+    } else {
+      throw new Error(
+        `Extension "${extension}" is not handled by any builder plugins.`,
+      );
+    }
+  }
+  public async buildConfigSource(
+    sourceCode: string,
+    extension: string,
+  ): Promise<string> {
+    const handler = this.builderPlugins[extension];
+    if (handler) {
+      return handler.buildConfigSource(sourceCode);
+    } else {
+      throw new Error(
+        `Extension "${extension}" is not handled by any builder plugins.`,
+      );
+    }
+  }
+}
+
+function extractNormalizedExtension(filePath: string) {
+  const result = filePath.match(/(?:\.([^.]+))?$/);
+  if (result) {
+    return result[1];
+  } else {
+    return '';
+  }
 }
 
 function isMockPlugin(plugin: PluginEntry): plugin is PluginEntry<MockPlugin> {
   return MOCK_PLUGIN_REGEX.test(plugin.name);
+}
+
+function isBuilderPlugin(
+  plugin: PluginEntry,
+): plugin is PluginEntry<BuilderPlugin> {
+  return BUILDER_PLUGIN_REGEX.test(plugin.name);
 }
